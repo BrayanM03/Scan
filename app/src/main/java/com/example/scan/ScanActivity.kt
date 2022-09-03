@@ -26,7 +26,7 @@ class ScanActivity : AppCompatActivity() {
         val bundle = intent.extras
         val usuario = bundle?.get("usuario")
 
-        val mBundle = Bundle()
+       /* val mBundle = Bundle()
         mBundle.putString("usuario", usuario.toString())
 
         val mFragmentManager = supportFragmentManager
@@ -34,7 +34,7 @@ class ScanActivity : AppCompatActivity() {
         val mFragment = ScanFragment()
 
         mFragment.arguments = mBundle
-        mFragmentTransaction.add(R.id.mainContainer, mFragment)
+        mFragmentTransaction.add(R.id.mainContainer, mFragment)*/
 
         //Controlando nav
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainContainer) as NavHostFragment

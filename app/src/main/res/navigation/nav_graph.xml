@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/scanFragment">
+
+    <fragment
+        android:id="@+id/scanFragment"
+        android:name="com.example.scan.ScanFragment"
+        android:label="fragment_scan"
+        tools:layout="@layout/fragment_scan" />
+    <fragment
+        android:id="@+id/pendingReportsFragment"
+        android:name="com.example.scan.PendingReportsFragment"
+        android:label="fragment_pending_reports"
+        tools:layout="@layout/fragment_pending_reports" />
+    <fragment
+        android:id="@+id/onlineReportsFragment"
+        android:name="com.example.scan.OnlineReportsFragment"
+        android:label="fragment_online_reports"
+        tools:layout="@layout/fragment_online_reports" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.scan.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

@@ -1,6 +1,7 @@
-package com.example.scan
+package com.example.scan.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,9 +9,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.example.scan.Data
+import com.example.scan.ResponseItem
+import com.example.scan.ScanActivity
 import com.example.scan.databinding.ActivityScanBinding
 import com.example.scan.databinding.FragmentScanBinding
+import com.example.scan.model.APIService
+import com.example.scan.model.RestEngine
 import com.google.zxing.integration.android.IntentIntegrator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import www.sanju.motiontoast.MotionToast
 import www.sanju.motiontoast.MotionToastStyle
 
@@ -29,9 +42,15 @@ class ScanFragment : Fragment() {
 
     private var _binding : FragmentScanBinding? = null
     private val binding get() = _binding!!
+    lateinit var mContext: Context
 
    /* private var param1: String? = null
     private var param2: String? = null*/
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,54 +59,64 @@ class ScanFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentScanBinding.inflate(inflater, container, false)
 
-       /* val bundle = arguments
-        val usuario = bundle?.getString("usuario")
-        println("Se paso satifactoriamente la cadena: $usuario y esto es el bundel $bundle")*/
-        return binding.root
+
+        val view = binding.root
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view,savedInstanceState)
-       /* arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }*/
 
+        val data = arguments
+        val usuario = data!!.getString("user")
+        if(usuario != null){
+            println("Se paso satifactoriamente la cadena: $usuario argumentos son: $data")
+            setSaludo(usuario)
+        }
 
         binding.btnScanner.setOnClickListener { initScanner()}
 
 
+
+
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    //Saludar al usuario
+    private fun setSaludo(usuario: String){
+        println("Se ejecuta mas de una vez?")
+        CoroutineScope(Dispatchers.IO).launch {
 
-        if(arguments != null){
-            val user = requireArguments().getString("usuario")
-            println("datos recibidos $user")
+            val apiService: APIService = RestEngine.getRestEngine().create(APIService::class.java)
+            val result = apiService.obtenerUsuario(usuario)
+
+
+
+            (mContext as Activity).runOnUiThread{
+
+                val bodyResponse = result.body()
+                val bodyData = bodyResponse?.data?.get(0)
+                println("Esta es la respuesta $bodyData")
+                val userName = bodyData?.nombre
+                val userLastname = bodyData?.apellido
+                val urlProfileImage = bodyData?.image_url
+                val userCompleteName = "$userName $userLastname"
+                val tvUserName = binding.tvUserName
+                val ivUser = binding.ivProfile
+                tvUserName.text = userCompleteName
+                Glide.with(this@ScanFragment).load(urlProfileImage).into(ivUser)
+
+
+
+
+            }
+
+
+
+
         }
 
     }
-
-    /*companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ScanFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ScanFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }*/
 
     //Funciones del escaner
     //Proceso del escaner

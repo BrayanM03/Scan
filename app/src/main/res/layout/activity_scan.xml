@@ -7,7 +7,7 @@
     tools:context=".ScanActivity">
 
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainContainer"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
@@ -18,7 +18,9 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/nav_graph" />
+        app:navGraph="@navigation/nav_graph"
+       />
+        <!--- app:navGraph="@navigation/nav_graph" -->
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

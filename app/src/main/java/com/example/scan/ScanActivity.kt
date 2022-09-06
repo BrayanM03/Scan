@@ -7,10 +7,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
+import androidx.navigation.findNavController
 import com.google.zxing.integration.android.IntentIntegrator
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.scan.databinding.ActivityScanBinding
+import com.example.scan.fragments.ScanFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ScanActivity : AppCompatActivity() {
@@ -26,20 +28,29 @@ class ScanActivity : AppCompatActivity() {
         val bundle = intent.extras
         val usuario = bundle?.get("usuario")
 
-       /* val mBundle = Bundle()
-        mBundle.putString("usuario", usuario.toString())
 
-        val mFragmentManager = supportFragmentManager
-        val mFragmentTransaction = mFragmentManager.beginTransaction()
-        val mFragment = ScanFragment()
+        val newBundle = Bundle()
+        newBundle.putString("user", usuario as String?)
 
-        mFragment.arguments = mBundle
-        mFragmentTransaction.add(R.id.mainContainer, mFragment)*/
+       // println("Imprimir-----> $newBundle y tambien----> $bundle")
+       // supportFragmentManager.beginTransaction().replace(R.id.mainContainer,scanFragment).commit()*/
+
+        //findNavController(R.id.mainContainer).setGraph(R.navigation.nav_graph, newBundle)
+
+
 
         //Controlando nav
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainContainer) as NavHostFragment
+       // navHostFragment.arguments = newBundle //Agregado por mi
         navController = navHostFragment.navController
+
+        navController.navigate(R.id.scanFragment, newBundle)
+        //Con esto puedo pasar argumentos al fragments desde esta activity,
+        // Yujuuuu!! 1 semana de trabajo para esta linea :')
+
+
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.BottomNavigationView)
+
         setupWithNavController(bottomNavigationView, navController)
 
 

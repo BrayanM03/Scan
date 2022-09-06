@@ -7,22 +7,26 @@
 
     <fragment
         android:id="@+id/scanFragment"
-        android:name="com.example.scan.ScanFragment"
+        android:name="com.example.scan.fragments.ScanFragment"
         android:label="fragment_scan"
-        tools:layout="@layout/fragment_scan" />
+        tools:layout="@layout/fragment_scan" >
+        <argument
+            android:name="user"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/pendingReportsFragment"
-        android:name="com.example.scan.PendingReportsFragment"
+        android:name="com.example.scan.fragments.PendingReportsFragment"
         android:label="fragment_pending_reports"
         tools:layout="@layout/fragment_pending_reports" />
     <fragment
         android:id="@+id/onlineReportsFragment"
-        android:name="com.example.scan.OnlineReportsFragment"
+        android:name="com.example.scan.fragments.OnlineReportsFragment"
         android:label="fragment_online_reports"
         tools:layout="@layout/fragment_online_reports" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.scan.ProfileFragment"
+        android:name="com.example.scan.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

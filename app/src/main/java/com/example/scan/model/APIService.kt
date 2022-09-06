@@ -19,6 +19,11 @@ interface APIService {
     @POST("API_PSC/main.php")
     fun validarSesion(): Call <ResponseItem>
 
+    @POST("API_PSC/obtener_usuario.php")
+    @FormUrlEncoded
+    suspend fun obtenerUsuario(@Field("user") user: String): Response<ResponseItem>
+
+
 
 }
 

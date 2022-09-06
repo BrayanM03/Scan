@@ -100,50 +100,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun validarSesionActual(){
-        val apiService: APIService = RestEngine.getRestEngine().create(APIService::class.java)
-        val result: Call<ResponseItem> = apiService.validarSesion()
-
-        result.enqueue(object : Callback<ResponseItem>{
-            override fun onResponse(call: Call<ResponseItem>, response: Response<ResponseItem>) {
-                val responseBody = response.body()!!
-                val responseEstatus = responseBody.estatus
-
-                if(responseEstatus != false){
-                    MotionToast.createToast(this@MainActivity,
-                        "Correcto",
-                        responseBody.mensaje,
-                        MotionToastStyle.SUCCESS,
-                        MotionToast.GRAVITY_BOTTOM,
-                        MotionToast.LONG_DURATION,
-                        null)
-
-                    /*var intentSA = Intent(this@MainActivity, ScannerActivity::class.java)
-                    startActivity(intentSA)*/
-
-                   println("Respuesta del servidor: ${responseBody}")
-
-                }else{
-                    MotionToast.createToast(this@MainActivity,
-                        "Error",
-                        responseBody.mensaje,
-                        MotionToastStyle.ERROR,
-                        MotionToast.GRAVITY_BOTTOM,
-                        MotionToast.LONG_DURATION,
-                        null)
-                    println("Respuesta del servidor: ${responseBody}")
-
-                }
-
-            }
-
-            override fun onFailure(call: Call<ResponseItem>, t: Throwable) {
-                Toast.makeText(this@MainActivity, "Llamada fallo: ${t}", Toast.LENGTH_LONG).show()
-                println("Llamada fallo: ${t}")
-            }
-        })
-    }
-
     private fun loginAnimation(imageView: LottieAnimationView, animation: Int){
         binding.btnIniciarSesion.text = "Inicando.."
 

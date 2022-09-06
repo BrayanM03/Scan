@@ -29,7 +29,8 @@ data class  Data(
     @SerializedName("apellido" ) var apellido : String? = null,
     @SerializedName("usuario"  ) var usuario  : String? = null,
     @SerializedName("rol"      ) var rol      : String? = null,
-    @SerializedName("sucursal" ) var sucursal : String? = null
+    @SerializedName("sucursal" ) var sucursal : String? = null,
+    @SerializedName("image_url" ) var image_url : String? = null
     /*val id: String,
     val nombre: String?,
     val apellido: String?,

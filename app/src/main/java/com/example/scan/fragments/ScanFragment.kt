@@ -36,7 +36,7 @@ import kotlin.math.log
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val TAG = "ScanActivity"
-private const val TEXT_CONTENTS = "TextContent"
+private const val USER_NAME = "name"
 
 /**
  * A simple [Fragment] subclass.
@@ -50,8 +50,6 @@ class ScanFragment : Fragment() {
     private val binding get() = _binding!!
     lateinit var mContext: Context
 
-   /* private var param1: String? = null
-    private var param2: String? = null*/
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -65,6 +63,8 @@ class ScanFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentScanBinding.inflate(inflater, container, false)
 
+        println("Oncreated call --> $savedInstanceState")
+        binding.tvEmptyCard.text = savedInstanceState?.getString(USER_NAME)
 
         val view = binding.root
 
@@ -88,19 +88,19 @@ class ScanFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         Log.d(TAG, "OnSaveInstanceState: called")
-        println("Se llamo la onSaveInstance")
         super.onSaveInstanceState(outState)
-        outState?.putString(TEXT_CONTENTS, binding.tvEmptyCard.text.toString())
+        val userName = binding.tvUserName.text.toString()
+        outState.putString(USER_NAME, userName)
+        println("LOL state $outState")
+
 
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?){
-        Log.d(TAG, "onRestoreInstanceState: called")
-        println("Se llamo  onViewStateRestored")
+        Log.d(TAG, "onRestoreInstanceState: called $savedInstanceState")
         super.onViewStateRestored(savedInstanceState)
-        val saveString = savedInstanceState?.getString(TEXT_CONTENTS, "Holis")
-        binding.tvEmptyCard?.text = saveString
     }
+
 
     //Saludar al usuario
     private fun setSaludo(usuario: String){
@@ -176,7 +176,6 @@ class ScanFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        //viewModel.listState =
         _binding = null
     }
 

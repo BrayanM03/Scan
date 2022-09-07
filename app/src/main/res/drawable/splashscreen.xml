@@ -3,7 +3,7 @@
 
         <item android:drawable="@color/colorPrimary"/>
         <item>
-          <bitmap android:src="@mipmap/logo_red"
+          <bitmap android:src="@mipmap/cuack"
               android:gravity="center"/>
         </item>
 
